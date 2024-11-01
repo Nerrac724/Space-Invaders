@@ -7,7 +7,7 @@ score=0
 
 #Basic Display, title and icon
 pygame.init()
-pygame.display.set_caption("Heroes of the Storm")
+pygame.display.set_caption("Space Invaders")
 screen = pygame.display.set_mode((1280,720))
 icon = pygame.image.load("startup.png")
 pygame.display.set_icon(icon)
@@ -77,7 +77,8 @@ Over_font = pygame.font.Font('freesansbold.ttf', 96)
 
 def game_over_txt():
     over_text  = Over_font.render("GAME OVER", True, (255,255,255))
-    screen.blit(over_text, (340, 620))
+    screen.blit(over_text, (340, 320))
+
 
 
 #All running states for the game
@@ -90,7 +91,7 @@ while running:
             running = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                if bullet_state is "ready":
+                if bullet_state == "ready":
                     bullet_sound = mixer.Sound('laser.wav')
                     bullet_sound.play()
                     bulletX = playerX
@@ -138,18 +139,18 @@ while running:
         bullet_state = "ready"
         bulletY = 610
 
-    if bullet_state is "fire":
+    if bullet_state == "fire":
         fire_bullet(bulletX, bulletY)
         bulletY -= bulletY_change
     
 
     #Enemy Movement
     for i in range(num_of_enemies):
-
-        if enemyY[i]>620:
+        if enemyY[i]>600:
             for j in range(num_of_enemies):
                 enemyY[j] = 2000
             game_over_txt()
+            mixer.music.stop()
             break
 
         enemyX[i] += enemyX_change[i]
